@@ -12,20 +12,20 @@ from .serializers import ImageSerializer
 
 class ImageViewSet(APIView):
     renderer_classes = [TemplateHTMLRenderer]
-    template_name = 'image_list.html'
+    template_name = "image_list.html"
     parser_classes = [MultiPartParser, FormParser, FileUploadParser]
 
     def get(self, request):
-        queryset = Images.objects.all()
+        queryset = Images.objects.all().order_by("-pub_date")
         serializer = ImageSerializer()
-        return Response({'images': queryset, 'serializer': serializer})
+        return Response({"images": queryset, "serializer": serializer})
 
     def post(self, request):
         serializer = ImageSerializer(data=request.data)
         if serializer.is_valid():
-            image = request.data['images']
+            image = request.data["images"]
             serializer.save(image=image)
-            return redirect('image_list')
+            return redirect("image_list")
         else:
             return Response(
                 serializer.errors,

@@ -1,9 +1,11 @@
 from django.db import models
 from PIL import Image
+from django.utils.timezone import now
 
 
 class Images(models.Model):
-    image = models.ImageField(upload_to='photos/', blank=True, null=True)
+    image = models.ImageField(upload_to="photos/", blank=True, null=True)
+    pub_date = models.DateTimeField("Дата публикации", default=now, blank=True)
 
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
