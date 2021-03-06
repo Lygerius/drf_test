@@ -8,11 +8,11 @@ git clone https://github.com/Lygerius/drf_test.git
 python manage.py migrate
 python manage.py createsuperuser
 ```
-###Собрать статику:
+### Собрать статику:
 ```
 python manage.py collectstatic
 ```
-###Запустить проект:
+### Запустить проект:
 ```
 python manage.py runserver
 ```
