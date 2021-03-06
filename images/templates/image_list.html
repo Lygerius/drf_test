@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <title>Загрузка фотографий</title>
+</head>
+<body>
+
+<div class="container">
+    <h1 class="col-md-12 text-center">Загрузка фотографий</h1>
+    <form action="{% url 'image_list' %}" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div class="form-group m-3 text-center">
+            <input required name="images"
+                   accept="image/png, image/jpeg" type="file" multiple class="form-control-file">
+            <button type="submit" class="btn btn-primary">Загрузить</button>
+        </div>
+    </form>
+</div>
+
+<div class="container">
+    <div class="row">
+        {% for image in images %}
+        <!--Grid column-->
+        <div class="col-lg-4 col-md-6 mb-4">
+            <a href="" class=""><img
+                    src="{{ image.image.url }}" class="img-fluid"
+                    alt=""></a>
+        </div>
+        <!--Grid column-->
+        {% endfor %}
+    </div>
+    <!--Grid row-->
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js" integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous"></script>
+
+</body>
+</html>
