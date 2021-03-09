@@ -1,4 +1,4 @@
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from rest_framework import status
 from rest_framework.parsers import (FileUploadParser, FormParser,
                                     MultiPartParser)
@@ -23,9 +23,18 @@ class ImageViewSet(APIView):
     def post(self, request):
         serializer = ImageSerializer(data=request.data)
         if serializer.is_valid():
-            image = request.data["images"]
-            serializer.save(image=image)
-            return redirect("image_list")
+            image = request.data["myFile"]
+            show_type = str(image).split(".")[1]
+            accept_type = ["jpeg", "jpg", "png"]
+            if show_type in accept_type:
+                serializer.save(image=image)
+                return redirect("image_list")
+            else:
+                return render(
+                    request,
+                    "image_list.html",
+                    {"message": "Неверный формат файла. Загрузите картинку!"}
+                )
         else:
             return Response(
                 serializer.errors,
